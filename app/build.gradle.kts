@@ -77,4 +77,16 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
 
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+
+    // data 모듈 참조
+    implementation(project(":data"))
+
+    // domain 모듈 참조
+    implementation(project(":domain"))
+
+    //Gson
+    implementation("com.squareup.retrofit2:converter-gson:2.0.0-beta3")
+
+
 }
