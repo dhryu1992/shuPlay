@@ -1,4 +1,4 @@
-package com.shuworld
+package com.shuworld.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -7,15 +7,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.shuworld.PodcastViewModel
+import com.shuworld.viewModel.PodcastViewModel
 import com.shuworld.ui.component.PodcastItem
 import androidx.compose.runtime.getValue
 import androidx.compose.foundation.lazy.items
+import androidx.hilt.navigation.compose.hiltViewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PodcastScreen(viewModel: PodcastViewModel = hiltViewModel()) {
+fun PodcastScreen(
+    viewModel: PodcastViewModel = hiltViewModel(),
+    navigateToDetail: (String) -> Unit
+) {
     val podcastList by viewModel.podcastList.collectAsState()
 
     Scaffold(
@@ -25,7 +29,9 @@ fun PodcastScreen(viewModel: PodcastViewModel = hiltViewModel()) {
     ) { padding ->
         LazyColumn(contentPadding = padding) {
             items(podcastList) { podcast ->
-                PodcastItem(podcast)
+                PodcastItem(podcast = podcast, onClick = {
+                    navigateToDetail(podcast.id)
+                })
             }
         }
     }

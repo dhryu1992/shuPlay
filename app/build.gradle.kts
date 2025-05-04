@@ -63,7 +63,6 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
-
     kapt("com.google.dagger:hilt-android-compiler:2.56.1")
 
     val room_version = "2.7.1"
@@ -114,7 +113,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
 
     // Navigation
-
     val nav_version = "2.8.9"
 
     // Jetpack Compose integration
@@ -132,4 +130,6 @@ dependencies {
 
     // JSON serialization library, works with the Kotlin serialization plugin
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+
+
 }
