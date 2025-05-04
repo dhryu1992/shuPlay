@@ -9,8 +9,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PodcastDao {
     @Query("SELECT * FROM podcasts")
-    fun getAll(): Flow<List<PodcastEntity>>
+    fun getAllPodcasts(): Flow<List<PodcastEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(podcasts: List<PodcastEntity>)
+    suspend fun insertPodcasts(podcasts: List<PodcastEntity>)
+
+    @Query("DELETE FROM podcasts")
+    suspend fun clearAll()
 }

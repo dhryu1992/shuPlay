@@ -2,7 +2,7 @@ package com.shuworld.di
 
 import android.content.Context
 import androidx.room.Room
-import com.shuworld.data.local.AppDatabase
+import com.shuworld.data.local.PodcastDatabase
 import com.shuworld.data.local.PodcastDao
 import com.shuworld.data.remote.PodcastApi
 import com.shuworld.data.repository.PodcastRepositoryImpl
@@ -32,12 +32,12 @@ class AppModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context
-    ): AppDatabase = Room.databaseBuilder(
-        context, AppDatabase::class.java, "shuplay.db"
+    ): PodcastDatabase = Room.databaseBuilder(
+        context, PodcastDatabase::class.java, "shuplay_database"
     ).build()
 
     @Provides
-    fun providePodcastDao(db: AppDatabase): PodcastDao = db.podCastDao()
+    fun providePodcastDao(database: PodcastDatabase): PodcastDao = database.podCastDao()
 
     @Provides
     @Singleton

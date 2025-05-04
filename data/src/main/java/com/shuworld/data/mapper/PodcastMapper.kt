@@ -10,8 +10,8 @@ fun PodcastDto.toDomain(): Podcast =
         title = title,
         description = description,
         imageUrl = imageUrl,
-        audioUrl = audioUrl, // ✅ 추가
-        episodes = emptyList()
+        audioUrl = audioUrl,
+        episodes = emptyList(),
     )
 
 fun PodcastEntity.toDomain(): Podcast =
@@ -20,8 +20,8 @@ fun PodcastEntity.toDomain(): Podcast =
         title = title,
         description = description,
         imageUrl = imageUrl,
-        audioUrl = audioUrl, // ✅ 추가
-        episodes = emptyList()
+        audioUrl = audioUrl,
+        episodes = emptyList(),
     )
 
 fun Podcast.toEntity(): PodcastEntity =
@@ -30,5 +30,5 @@ fun Podcast.toEntity(): PodcastEntity =
         title = title,
         description = description,
         imageUrl = imageUrl,
-        audioUrl = audioUrl // ✅ 추가
+        audioUrl = audioUrl,
     )
