@@ -5,4 +5,5 @@ data class PodcastDto (
     val title: String,
     val description: String,
     val imageUrl: String,
+    val audioUrl: String,
 )

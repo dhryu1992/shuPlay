@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.shuworld.ui.screen.PodcastDetailScreen
 import com.shuworld.ui.screen.PodcastScreen
 import com.shuworld.ui.theme.ShuPlayTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,12 @@ class MainActivity : ComponentActivity() {
                                 navController.navigate("podcast_detail/$podcastId")
                             }
                         )
+                    }
+
+                    composable("podcast_detail/{podcastId}") { backStackEntry ->
+                        val podcastId =
+                            backStackEntry.arguments?.getString("podcastId") ?: return@composable
+                        PodcastDetailScreen(podcastId = podcastId)
                     }
                 }
             }

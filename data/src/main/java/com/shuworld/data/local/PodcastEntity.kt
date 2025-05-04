@@ -9,4 +9,5 @@ data class PodcastEntity(
     val title: String,
     val description: String,
     val imageUrl: String,
+    val audioUrl: String,
 )

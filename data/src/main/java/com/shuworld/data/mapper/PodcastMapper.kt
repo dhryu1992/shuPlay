@@ -5,10 +5,30 @@ import com.shuworld.data.remote.PodcastDto
 import com.shuworld.domain.model.Podcast
 
 fun PodcastDto.toDomain(): Podcast =
-    Podcast(id, title, description, imageUrl, episodes = emptyList())
+    Podcast(
+        id = id,
+        title = title,
+        description = description,
+        imageUrl = imageUrl,
+        audioUrl = audioUrl, // ✅ 추가
+        episodes = emptyList()
+    )
 
 fun PodcastEntity.toDomain(): Podcast =
-    Podcast(id, title, description, imageUrl, episodes = emptyList())
+    Podcast(
+        id = id,
+        title = title,
+        description = description,
+        imageUrl = imageUrl,
+        audioUrl = audioUrl, // ✅ 추가
+        episodes = emptyList()
+    )
 
 fun Podcast.toEntity(): PodcastEntity =
-    PodcastEntity(id, title, description, imageUrl)
+    PodcastEntity(
+        id = id,
+        title = title,
+        description = description,
+        imageUrl = imageUrl,
+        audioUrl = audioUrl // ✅ 추가
+    )
