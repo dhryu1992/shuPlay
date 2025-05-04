@@ -24,7 +24,7 @@ fun PodcastEntity.toDomain(): Podcast =
         episodes = emptyList(),
     )
 
-fun Podcast.toEntity(): PodcastEntity =
+fun PodcastDto.toEntity(): PodcastEntity =
     PodcastEntity(
         id = id,
         title = title,
