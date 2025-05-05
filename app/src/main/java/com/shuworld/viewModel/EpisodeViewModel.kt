@@ -27,6 +27,10 @@ class EpisodeViewModel @Inject constructor(
         .getEpisodes(podcastId)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val isPlaying: StateFlow<Boolean> = player.isPlaying
+    val currentPosition: StateFlow<Long> = player.currentPosition
+    val duration: StateFlow<Long> = player.duration
+
     init {
         viewModelScope.launch {
             episodeRepository.refreshEpisodes(podcastId)
@@ -41,6 +45,10 @@ class EpisodeViewModel @Inject constructor(
             }
         }
         player.play(url)
+    }
+
+    fun pause() {
+        player.pause()
     }
 
     fun stop() {

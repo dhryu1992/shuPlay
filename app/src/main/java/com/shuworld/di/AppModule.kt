@@ -13,6 +13,7 @@ import com.shuworld.data.repository.PodcastRepositoryImpl
 import com.shuworld.data.repository.RecentEpisodeRepositoryImpl
 import com.shuworld.domain.repository.EpisodeRepository
 import com.shuworld.domain.repository.PodcastRepository
+import com.shuworld.player.ExoPlayerManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -85,4 +86,10 @@ class AppModule {
     fun provideRecentEpisodeRepository(
         dao: RecentEpisodeDao
     ) : RecentEpisodeRepositoryImpl = RecentEpisodeRepositoryImpl(dao)
+
+    @Provides
+    @Singleton
+    fun provideExoPlayerManager(
+        @ApplicationContext context: Context
+    ): ExoPlayerManager = ExoPlayerManager(context)
 }

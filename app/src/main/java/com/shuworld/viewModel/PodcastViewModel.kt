@@ -34,7 +34,7 @@ class PodcastViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000),
             emptyList()
         )
-    
+
     init {
         observePodcasts()
     }

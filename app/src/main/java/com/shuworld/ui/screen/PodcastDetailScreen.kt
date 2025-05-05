@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -50,12 +50,16 @@ fun PodcastDetailScreen(
     val podcast by podcastViewModel.podcast.collectAsState()
     val episodes by episodeViewModel.episodes.collectAsState()
 
+    val isPlaying by episodeViewModel.isPlaying.collectAsState()
+    val currentPosition by episodeViewModel.currentPosition.collectAsState()
+    val duration by episodeViewModel.duration.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Podcast Detail") },
                 navigationIcon = {
-                    IconButton(onClick = { podcastViewModel.pause() }) {
+                    IconButton(onClick = { /* TODO: Back navigation */ }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
@@ -89,34 +93,48 @@ fun PodcastDetailScreen(
                 Text(currentPodcast.description, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(24.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Button(onClick = { podcastViewModel.play() }) {
-                        Text("▶️ Play")
-                    }
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    Button(onClick = { podcastViewModel.pause() }) {
-                        Text("⏸️ Pause")
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
                 HorizontalDivider()
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text("🎧 Episodes", style = MaterialTheme.typography.titleMedium)
-
                 Spacer(modifier = Modifier.height(8.dp))
 
                 episodes.forEach { episode ->
-                    Text("• ${episode.title}", style = MaterialTheme.typography.bodyMedium)
-                    Spacer(modifier = Modifier.height(4.dp))
-                }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        Text(episode.title, style = MaterialTheme.typography.bodyLarge)
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(episode.description, style = MaterialTheme.typography.bodySmall)
 
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Slider(
+                            value = currentPosition.toFloat(),
+                            onValueChange = {},
+                            valueRange = 0f..duration.toFloat()
+                        )
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            if (isPlaying) {
+                                Button(onClick = { episodeViewModel.pause() }) {
+                                    Text("⏸ Pause")
+                                }
+                            } else {
+                                Button(onClick = { episodeViewModel.play(episode.audioUrl) }) {
+                                    Text("▶️ Play")
+                                }
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             } ?: CircularProgressIndicator()
         }
     }
