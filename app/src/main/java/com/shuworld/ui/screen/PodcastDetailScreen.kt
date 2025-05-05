@@ -18,6 +18,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,26 +36,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
+import com.shuworld.viewModel.EpisodeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PodcastDetailScreen(
     podcastId: String,
-    viewModel: PodcastDetailViewModel = hiltViewModel<PodcastDetailViewModel, PodcastDetailViewModel.Factory>(
+    podcastViewModel: PodcastDetailViewModel = hiltViewModel<PodcastDetailViewModel, PodcastDetailViewModel.Factory>(
         key = podcastId
-    ) {
-        it.create(podcastId)
-    }
+    ) { it.create(podcastId) },
+    episodeViewModel: EpisodeViewModel
 ) {
-    val podcast by viewModel.podcast.collectAsState()
-    val currentPodcast = podcast
+    val podcast by podcastViewModel.podcast.collectAsState()
+    val episodes by episodeViewModel.episodes.collectAsState()
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Podcast Detail") },
                 navigationIcon = {
-                    IconButton(onClick = { viewModel.pause() }) {
+                    IconButton(onClick = { podcastViewModel.pause() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
@@ -69,7 +70,7 @@ fun PodcastDetailScreen(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (currentPodcast != null) {
+            podcast?.let { currentPodcast ->
                 AsyncImage(
                     model = currentPodcast.imageUrl,
                     contentDescription = null,
@@ -85,30 +86,38 @@ fun PodcastDetailScreen(
                 Text("🎙️ ${currentPodcast.title}", style = MaterialTheme.typography.headlineSmall)
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text("👤 ${currentPodcast.description}", style = MaterialTheme.typography.bodyMedium)
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(currentPodcast.description, style = MaterialTheme.typography.bodyLarge)
+                Text(currentPodcast.description, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Button(onClick = { viewModel.play() }) {
+                    Button(onClick = { podcastViewModel.play() }) {
                         Text("▶️ Play")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
-                    Button(onClick = { viewModel.pause() }) {
+                    Button(onClick = { podcastViewModel.pause() }) {
                         Text("⏸️ Pause")
                     }
                 }
 
-            } else {
-                CircularProgressIndicator()
-            }
+                Spacer(modifier = Modifier.height(24.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text("🎧 Episodes", style = MaterialTheme.typography.titleMedium)
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                episodes.forEach { episode ->
+                    Text("• ${episode.title}", style = MaterialTheme.typography.bodyMedium)
+                    Spacer(modifier = Modifier.height(4.dp))
+                }
+
+            } ?: CircularProgressIndicator()
         }
     }
 }
