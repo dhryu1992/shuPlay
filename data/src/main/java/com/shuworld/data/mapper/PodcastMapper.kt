@@ -1,7 +1,7 @@
 package com.shuworld.data.mapper
 
-import com.shuworld.data.local.PodcastEntity
-import com.shuworld.data.remote.PodcastDto
+import com.shuworld.data.local.entity.PodcastEntity
+import com.shuworld.data.remote.model.PodcastDto
 import com.shuworld.domain.model.Podcast
 
 fun PodcastDto.toDomain(): Podcast =

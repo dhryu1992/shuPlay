@@ -1,9 +1,9 @@
 package com.shuworld.data.repository
 
-import com.shuworld.data.local.PodcastDao
+import com.shuworld.data.local.dao.PodcastDao
 import com.shuworld.data.mapper.toDomain
 import com.shuworld.data.mapper.toEntity
-import com.shuworld.data.remote.PodcastApi
+import com.shuworld.data.remote.api.PodcastApi
 import com.shuworld.domain.model.Podcast
 import javax.inject.Inject
 import com.shuworld.domain.repository.PodcastRepository

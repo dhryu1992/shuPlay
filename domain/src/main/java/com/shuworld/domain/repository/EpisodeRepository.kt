@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface EpisodeRepository {
     fun getEpisodes(podcastId: String): Flow<List<Episode>>
     suspend fun refreshEpisodes(podcastId: String)
+    fun getEpisodeById(episodeId: String): Flow<Episode?>
 }

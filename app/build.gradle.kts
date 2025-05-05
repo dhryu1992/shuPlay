@@ -88,6 +88,9 @@ dependencies {
     // domain 모듈 참조
     implementation(project(":domain"))
 
+    // player 모듈 참조
+    implementation(project(":player"))
+
     //Gson
     implementation("com.squareup.retrofit2:converter-gson:2.0.0-beta3")
 

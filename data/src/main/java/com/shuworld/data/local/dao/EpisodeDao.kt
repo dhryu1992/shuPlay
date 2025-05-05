@@ -17,4 +17,7 @@ interface EpisodeDao {
 
     @Query("DELETE FROM episodes WHERE podcastId = :podcastId")
     suspend fun deleteEpisodesByPodcast(podcastId: String)
+
+    @Query("SELECT * FROM episodes WHERE id = :episodeId")
+    fun getEpisodeById(episodeId: String): Flow<EpisodeEntity?>
 }

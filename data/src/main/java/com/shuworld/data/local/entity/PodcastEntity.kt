@@ -1,4 +1,4 @@
-package com.shuworld.data.local
+package com.shuworld.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

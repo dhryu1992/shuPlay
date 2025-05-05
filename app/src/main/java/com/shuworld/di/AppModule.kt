@@ -2,10 +2,14 @@ package com.shuworld.di
 
 import android.content.Context
 import androidx.room.Room
-import com.shuworld.data.local.PodcastDatabase
-import com.shuworld.data.local.PodcastDao
-import com.shuworld.data.remote.PodcastApi
+import com.shuworld.data.local.database.PodcastDatabase
+import com.shuworld.data.local.dao.PodcastDao
+import com.shuworld.data.local.dao.EpisodeDao
+import com.shuworld.data.remote.api.EpisodeApi
+import com.shuworld.data.remote.api.PodcastApi
+import com.shuworld.data.repository.EpisodeRepositoryImpl
 import com.shuworld.data.repository.PodcastRepositoryImpl
+import com.shuworld.domain.repository.EpisodeRepository
 import com.shuworld.domain.repository.PodcastRepository
 import dagger.Module
 import dagger.Provides
@@ -20,12 +24,27 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
+    private val BASE_URL = "http://your.api.url"
+
     @Provides
     @Singleton
-    fun providePodcastApi(): PodcastApi {
-        return Retrofit.Builder().baseUrl("http://your.api.url")
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .build().create(PodcastApi::class.java)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providePodcastApi(retrofit: Retrofit): PodcastApi {
+        return retrofit.create(PodcastApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEpisodeApi(retrofit: Retrofit): EpisodeApi {
+        return retrofit.create(EpisodeApi::class.java)
     }
 
     @Provides
@@ -45,4 +64,14 @@ class AppModule {
         api: PodcastApi,
         dao: PodcastDao
     ): PodcastRepository = PodcastRepositoryImpl(api, dao)
+
+    @Provides
+    fun provideEpisodeDao(database: PodcastDatabase): EpisodeDao = database.episodeDao()
+
+    @Provides
+    @Singleton
+    fun provideEpisodeRepository(
+        api: EpisodeApi,
+        dao: EpisodeDao
+    ): EpisodeRepository = EpisodeRepositoryImpl(api, dao)
 }

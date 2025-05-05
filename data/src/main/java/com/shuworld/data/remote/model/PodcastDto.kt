@@ -1,4 +1,4 @@
-package com.shuworld.data.remote
+package com.shuworld.data.remote.model
 
 data class PodcastDto (
     val id: String,
