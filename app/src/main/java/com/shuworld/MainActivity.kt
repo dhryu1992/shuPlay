@@ -11,6 +11,7 @@ import com.shuworld.ui.screen.EpisodeDetailScreen
 import com.shuworld.ui.screen.PlayerScreen
 import com.shuworld.ui.screen.PodcastDetailScreen
 import com.shuworld.ui.screen.PodcastScreen
+import com.shuworld.ui.screen.RecentEpisodeScreen
 import com.shuworld.ui.theme.ShuPlayTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,8 +45,15 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("podcast_detail/{podcastId}") { backStackEntry ->
-                        val podcastId = backStackEntry.arguments?.getString("podcastId") ?: return@composable
+                        val podcastId =
+                            backStackEntry.arguments?.getString("podcastId") ?: return@composable
                         PodcastDetailScreen(podcastId = podcastId)
+                    }
+
+                    composable("recent_episodes") {
+                        RecentEpisodeScreen { audioUrl ->
+                            navController.navigate("episode_player/$audioUrl")
+                        }
                     }
                 }
             }

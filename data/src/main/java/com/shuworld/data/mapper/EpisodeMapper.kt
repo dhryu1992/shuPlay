@@ -10,6 +10,7 @@ fun EpisodeDto.toEntity(): EpisodeEntity = EpisodeEntity(
     title = title,
     audioUrl = audioUrl,
     description = description,
+    imageUrl = imageUrl
 )
 
 fun EpisodeEntity.toDomain(): Episode = Episode(
@@ -18,5 +19,6 @@ fun EpisodeEntity.toDomain(): Episode = Episode(
     title = title,
     audioUrl = audioUrl,
     description = description,
+    imageUrl = imageUrl,
 )
 

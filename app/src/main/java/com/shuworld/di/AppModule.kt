@@ -5,10 +5,12 @@ import androidx.room.Room
 import com.shuworld.data.local.database.PodcastDatabase
 import com.shuworld.data.local.dao.PodcastDao
 import com.shuworld.data.local.dao.EpisodeDao
+import com.shuworld.data.local.dao.RecentEpisodeDao
 import com.shuworld.data.remote.api.EpisodeApi
 import com.shuworld.data.remote.api.PodcastApi
 import com.shuworld.data.repository.EpisodeRepositoryImpl
 import com.shuworld.data.repository.PodcastRepositoryImpl
+import com.shuworld.data.repository.RecentEpisodeRepositoryImpl
 import com.shuworld.domain.repository.EpisodeRepository
 import com.shuworld.domain.repository.PodcastRepository
 import dagger.Module
@@ -74,4 +76,13 @@ class AppModule {
         api: EpisodeApi,
         dao: EpisodeDao
     ): EpisodeRepository = EpisodeRepositoryImpl(api, dao)
+
+    @Provides
+    fun provideRecentEpisodeDao(database: PodcastDatabase): RecentEpisodeDao = database.RecentEpisodeDao()
+
+    @Provides
+    @Singleton
+    fun provideRecentEpisodeRepository(
+        dao: RecentEpisodeDao
+    ) : RecentEpisodeRepositoryImpl = RecentEpisodeRepositoryImpl(dao)
 }

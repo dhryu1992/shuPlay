@@ -3,6 +3,7 @@ package com.shuworld.viewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shuworld.data.repository.RecentEpisodeRepositoryImpl
 import com.shuworld.domain.model.Episode
 import com.shuworld.domain.repository.EpisodeRepository
 import com.shuworld.player.ExoPlayerManager
@@ -15,23 +16,30 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EpisodeViewModel @Inject constructor(
-    private val repository: EpisodeRepository,
+    private val episodeRepository: EpisodeRepository,
+    private val recentEpisodeRepositoryImpl: RecentEpisodeRepositoryImpl,
     private val player: ExoPlayerManager,
     savedStateHandle: SavedStateHandle,
 ): ViewModel() {
     private val podcastId: String = checkNotNull(savedStateHandle["podcastId"])
 
-    val episodes: StateFlow<List<Episode>> = repository
+    val episodes: StateFlow<List<Episode>> = episodeRepository
         .getEpisodes(podcastId)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     init {
         viewModelScope.launch {
-            repository.refreshEpisodes(podcastId)
+            episodeRepository.refreshEpisodes(podcastId)
         }
     }
 
     fun play(url:String) {
+        viewModelScope.launch {
+            val episode = episodes.value.find { it.audioUrl == url }
+            if (episode != null) {
+                recentEpisodeRepositoryImpl.addRecentEpisode(episode)
+            }
+        }
         player.play(url)
     }
 

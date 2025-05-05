@@ -6,4 +6,5 @@ data class EpisodeDto(
     val title: String,
     val audioUrl: String,
     val description: String,
+    val imageUrl: String,
 )

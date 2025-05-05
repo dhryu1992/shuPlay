@@ -45,7 +45,7 @@ fun PodcastDetailScreen(
     podcastViewModel: PodcastDetailViewModel = hiltViewModel<PodcastDetailViewModel, PodcastDetailViewModel.Factory>(
         key = podcastId
     ) { it.create(podcastId) },
-    episodeViewModel: EpisodeViewModel
+    episodeViewModel: EpisodeViewModel = hiltViewModel()
 ) {
     val podcast by podcastViewModel.podcast.collectAsState()
     val episodes by episodeViewModel.episodes.collectAsState()
