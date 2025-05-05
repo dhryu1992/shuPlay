@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.shuworld.ui.screen.EpisodeDetailScreen
+import com.shuworld.ui.screen.PlayerScreen
 import com.shuworld.ui.screen.PodcastDetailScreen
 import com.shuworld.ui.screen.PodcastScreen
 import com.shuworld.ui.theme.ShuPlayTheme
