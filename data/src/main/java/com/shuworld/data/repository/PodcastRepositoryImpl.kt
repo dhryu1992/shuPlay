@@ -24,6 +24,7 @@ class PodcastRepositoryImpl @Inject constructor(
             dao.clearAll()
             dao.insertPodcasts(remote.map { it.toEntity() })
             emit(remote.map { it.toDomain() })
+        } catch (e: Exception) {
             // todo: API 실패 시
         }
     }
