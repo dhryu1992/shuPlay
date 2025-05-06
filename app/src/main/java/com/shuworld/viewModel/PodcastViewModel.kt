@@ -1,5 +1,6 @@
 package com.shuworld.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shuworld.domain.model.Podcast
@@ -36,6 +37,7 @@ class PodcastViewModel @Inject constructor(
         )
 
     init {
+        Log.d("siwoo", "observePodcasts() 호출 됨")
         observePodcasts()
     }
 

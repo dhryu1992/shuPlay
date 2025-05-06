@@ -1,5 +1,6 @@
 package com.shuworld.data.repository
 
+import android.util.Log
 import com.shuworld.data.local.dao.PodcastDao
 import com.shuworld.data.mapper.toDomain
 import com.shuworld.data.mapper.toEntity
@@ -17,15 +18,17 @@ class PodcastRepositoryImpl @Inject constructor(
 ) : PodcastRepository {
     override fun getPodcasts(): Flow<List<Podcast>> = flow {
         val local = dao.getAllPodcasts().firstOrNull().orEmpty()
+        Log.d("siwoo", "Room에서 불러온 Podcast 개수: ${local.size}")
         emit(local.map { it.toDomain() })
 
         try {
             val remote = api.getPodcasts()
+            Log.d("siwoo", "API에서 불러온 Podcast 개수: ${remote.size}")
             dao.clearAll()
             dao.insertPodcasts(remote.map { it.toEntity() })
             emit(remote.map { it.toDomain() })
         } catch (e: Exception) {
-            // todo: API 실패 시
+            Log.e("siwoo", "API 요청 실패: ${e.message}")
         }
     }
 

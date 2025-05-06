@@ -39,7 +39,7 @@ fun RecentEpisodeScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onEpisodeClick(episode.audioUrl) }
+                        .clickable { onEpisodeClick(episode.id) }
                         .padding(16.dp)
                 ) {
                     Text(text = episode.title, style = MaterialTheme.typography.titleMedium)

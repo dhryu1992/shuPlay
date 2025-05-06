@@ -51,8 +51,8 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("recent_episodes") {
-                        RecentEpisodeScreen { audioUrl ->
-                            navController.navigate("episode_player/$audioUrl")
+                        RecentEpisodeScreen { episodeId ->
+                            navController.navigate("episode_player/$episodeId")
                         }
                     }
                 }
